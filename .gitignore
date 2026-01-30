@@ -10,3 +10,6 @@ build/
 
 # Clangd configuration
 .clangd
+
+# Zed configuration
+.zed/
