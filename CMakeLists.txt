@@ -26,7 +26,7 @@ if (NOT raylib_FOUND)
 endif()
 
 # Create executable
-add_executable(CAdventure src/main.c)
+add_executable(CAdventure src/main.c src/player.c)
 
 # Link raylib
 target_link_libraries(CAdventure raylib)
