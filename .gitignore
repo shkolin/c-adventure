@@ -1,0 +1,12 @@
+# Object files
+*.o
+*.obj
+
+# Build directories
+build/
+
+# Other
+.DS_Store
+
+# Clangd configuration
+.clangd
