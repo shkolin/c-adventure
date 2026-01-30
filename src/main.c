@@ -12,7 +12,6 @@ static Camera2D camera = {0};
 static const int SCREEN_WIDTH = 800;
 static const int SCREEN_HEIGHT = 600;
 static const int FPS = 60;
-static const int FONT_SIZE = 14;
 
 // Main entry point
 int main(void) {
@@ -38,34 +37,55 @@ static void InitGame(void) {
   // Initialize player variables
   player.position.x = 0;
   player.position.y = 0;
-  player.size.width = 16;
-  player.size.height = 16;
+  player.size.width = 24;
+  player.size.height = 24;
   player.speed = DEFAULT_PLAYER_SPEED;
   player.state = Idle;
+  player.direction = DOWN;
+  player.current_frame = 0;
+  player.frame_counter = 0;
+  player.frames_speed = 16;
+  player.num_frames = 4;
 
   player_texture = LoadTexture("../assets/Char_003.png");
   player_texture_idle = LoadTexture("../assets/Char_003_Idle.png");
 }
 
 static void UpdateGame(void) {
+  player.state = Idle;
+
   // Player movement
   if (IsKeyDown(KEY_W) && player.position.y > 0) {
     player.direction = UP;
+    player.state = Walking;
     player.position.y -= player.speed;
   }
   if (IsKeyDown(KEY_S) &&
       player.position.y + player.size.height < SCREEN_HEIGHT) {
     player.direction = DOWN;
+    player.state = Walking;
     player.position.y += player.speed;
   }
   if (IsKeyDown(KEY_A) && player.position.x > 0) {
     player.direction = LEFT;
+    player.state = Walking;
     player.position.x -= player.speed;
   }
   if (IsKeyDown(KEY_D) &&
       player.position.x + player.size.width < SCREEN_WIDTH) {
     player.direction = RIGHT;
+    player.state = Walking;
     player.position.x += player.speed;
+  }
+
+  // Animation frame update
+  player.frame_counter++;
+  if (player.frame_counter >= player.frames_speed) {
+    player.frame_counter = 0;
+    player.current_frame++;
+    if (player.current_frame >= player.num_frames) {
+      player.current_frame = 0;
+    }
   }
 }
 
@@ -73,6 +93,12 @@ static void UpdateGame(void) {
 static void DrawGame(void) {
   BeginDrawing();
   ClearBackground(DARKGRAY);
-  DrawFPS(10, 10);
+  DrawTexturePro((player.state == Idle) ? player_texture_idle : player_texture,
+                 (Rectangle){player.current_frame * player.size.width,
+                             player.direction * player.size.height,
+                             player.size.width, player.size.height},
+                 (Rectangle){player.position.x, player.position.y,
+                             player.size.width * 3, player.size.height * 3},
+                 (Vector2){0, 0}, 0.0f, WHITE);
   EndDrawing();
 }

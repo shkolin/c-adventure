@@ -6,10 +6,10 @@
 const float DEFAULT_PLAYER_SPEED = 3.0f;
 
 enum PlayerDirection {
-  UP = 1,
-  DOWN = 2,
-  LEFT = 3,
-  RIGHT = 4,
+  UP = 3,
+  DOWN = 0,
+  LEFT = 2,
+  RIGHT = 1,
 };
 
 enum PlayerState {
@@ -28,6 +28,10 @@ typedef struct Player {
   float speed;
   enum PlayerState state;
   enum PlayerDirection direction;
+  int current_frame;
+  int frame_counter;
+  int frames_speed;
+  int num_frames;
 } Player;
 
 #endif
