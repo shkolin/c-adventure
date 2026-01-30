@@ -7,10 +7,10 @@
 static Player player = {0};
 static Texture2D player_texture = {0};
 static Texture2D player_texture_idle = {0};
-static Camera2D camera = {0};
 
 static const int SCREEN_WIDTH = 800;
 static const int SCREEN_HEIGHT = 600;
+static const int SCALE = 3;
 static const int FPS = 60;
 
 // Main entry point
@@ -36,16 +36,15 @@ int main(void) {
 static void InitGame(void) {
   // Initialize player variables
   player.position.x = 0;
-  player.position.y = 0;
+  player.position.y = 50;
   player.size.width = 24;
   player.size.height = 24;
   player.speed = DEFAULT_PLAYER_SPEED;
   player.state = Idle;
   player.direction = DOWN;
-  player.current_frame = 0;
-  player.frame_counter = 0;
-  player.frames_speed = 16;
-  player.num_frames = 4;
+
+  // Initialize player animation
+  InitAnimation(&player.animation, DEFAULT_ANIMATION_SPEED, DEFAULT_NUM_FRAMES);
 
   player_texture = LoadTexture("../assets/Char_003.png");
   player_texture_idle = LoadTexture("../assets/Char_003_Idle.png");
@@ -79,26 +78,26 @@ static void UpdateGame(void) {
   }
 
   // Animation frame update
-  player.frame_counter++;
-  if (player.frame_counter >= player.frames_speed) {
-    player.frame_counter = 0;
-    player.current_frame++;
-    if (player.current_frame >= player.num_frames) {
-      player.current_frame = 0;
-    }
-  }
+  UpdateAnimation(&player.animation);
 }
 
 // Draw game elements
 static void DrawGame(void) {
   BeginDrawing();
   ClearBackground(DARKGRAY);
-  DrawTexturePro((player.state == Idle) ? player_texture_idle : player_texture,
-                 (Rectangle){player.current_frame * player.size.width,
-                             player.direction * player.size.height,
-                             player.size.width, player.size.height},
-                 (Rectangle){player.position.x, player.position.y,
-                             player.size.width * 3, player.size.height * 3},
-                 (Vector2){0, 0}, 0.0f, WHITE);
+  DrawText(
+      TextFormat("Player x:%.0f y:%.0f", player.position.x, player.position.y),
+      15, 15, 16, RAYWHITE);
+  DrawText(TextFormat("FPS: %d", GetFPS()), 15, 35, 16, RAYWHITE);
+
+  Texture2D current_texture =
+      (player.state == Idle) ? player_texture_idle : player_texture;
+  Rectangle source =
+      GetAnimationSourceRect(&player.animation, player.size.width,
+                             player.size.height, player.direction);
+  Rectangle dest = {player.position.x, player.position.y,
+                    player.size.width * SCALE, player.size.height * SCALE};
+
+  DrawTexturePro(current_texture, source, dest, (Vector2){0, 0}, 0.0f, WHITE);
   EndDrawing();
 }

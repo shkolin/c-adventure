@@ -3,7 +3,18 @@
 
 #include <raylib.h>
 
-const float DEFAULT_PLAYER_SPEED = 3.0f;
+extern const float DEFAULT_PLAYER_SPEED;
+
+// Animation constants
+extern const int DEFAULT_ANIMATION_SPEED;
+extern const int DEFAULT_NUM_FRAMES;
+
+typedef struct Animation {
+  int current_frame;
+  int frame_counter;
+  int frames_speed;
+  int num_frames;
+} Animation;
 
 enum PlayerDirection {
   UP = 3,
@@ -28,10 +39,14 @@ typedef struct Player {
   float speed;
   enum PlayerState state;
   enum PlayerDirection direction;
-  int current_frame;
-  int frame_counter;
-  int frames_speed;
-  int num_frames;
+  Animation animation;
 } Player;
+
+// Animation functions
+void InitAnimation(Animation *animation, int frames_speed, int num_frames);
+void UpdateAnimation(Animation *animation);
+void ResetAnimation(Animation *animation);
+Rectangle GetAnimationSourceRect(const Animation *animation, int frame_width,
+                                 int frame_height, int direction);
 
 #endif
