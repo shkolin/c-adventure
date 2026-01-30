@@ -29,4 +29,4 @@ endif()
 add_executable(CAdventure src/main.c)
 
 # Link raylib
-target_link_libraries(CAdenture raylib)
+target_link_libraries(CAdventure raylib)
