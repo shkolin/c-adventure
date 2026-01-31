@@ -8,8 +8,8 @@ build/
 # Other
 .DS_Store
 
-# Clangd configuration
-.clangd
-
 # Zed configuration
 .zed/
+
+# Cache directory
+.cache/
