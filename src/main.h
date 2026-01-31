@@ -1,8 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-static void InitGame(void);
-static void UpdateGame(void);
-static void DrawGame(void);
+static void init_game(void);
+static void gameloop(void);
+static void draw_game(void);
 
 #endif
