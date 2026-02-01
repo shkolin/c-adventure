@@ -40,7 +40,7 @@ typedef struct PlayerSize
 typedef struct Player
 {
     PlayerSize size;
-    PlayerSize frame_size;
+    PlayerSize frame;
     Vector2 position;
     float speed;
     enum PlayerState state;
