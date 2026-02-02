@@ -20,6 +20,7 @@ int main(void)
     SetTargetFPS(FPS);
 
     init_game();
+    update_scale();
 
     while (!WindowShouldClose())
     {
@@ -52,21 +53,29 @@ static void init_game(void)
     player_texture_idle = LoadTexture("../assets/Char_003_Idle.png");
 }
 
-static void update_scale(void) {}
+static void update_scale(void)
+{
+    int height = GetScreenHeight();
+    SCALE = 3.0f * ((float)height / 720.0f);
+    player.speed = DEFAULT_PLAYER_SPEED * SCALE;
+}
 
 static void gameloop(void)
 {
-    if (IsKeyPressed(KEY_F))
+    if ((IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)) && IsKeyPressed(KEY_ENTER))
     {
         ToggleFullscreen();
-    }
-
-    if (IsWindowResized())
-    {
-        int monitor = GetCurrentMonitor();
-        int monitor_width = GetMonitorWidth(monitor);
-        int monitor_height = GetMonitorHeight(monitor);
-        SetWindowSize(monitor_width, monitor_height);
+        if (IsWindowResized())
+        {
+            int monitor = GetCurrentMonitor();
+            int monitor_width = GetMonitorWidth(monitor);
+            int monitor_height = GetMonitorHeight(monitor);
+            SetWindowSize(monitor_width, monitor_height);
+        }
+        else
+        {
+            SetWindowSize(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+        }
         update_scale();
     }
 
@@ -75,9 +84,9 @@ static void gameloop(void)
     bool pressed_key_left = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT);
     bool pressed_key_right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT);
 
-    Vector2 sprite_offset = {8, 6};
-    float player_x = player.position.x + sprite_offset.x * SCALE;
-    float player_y = player.position.y + sprite_offset.y * SCALE;
+    Vector2 player_sprite_offset = {8, 6};
+    float player_x = player.position.x + player_sprite_offset.x * SCALE;
+    float player_y = player.position.y + player_sprite_offset.y * SCALE;
     int player_width = player.size.width * SCALE;
     int player_height = player.size.height * SCALE;
 

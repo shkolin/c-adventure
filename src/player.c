@@ -1,7 +1,7 @@
 #include "player.h"
 
 // Define constants
-const float DEFAULT_PLAYER_SPEED = 3.0f;
+const float DEFAULT_PLAYER_SPEED = 1.0f;
 const int DEFAULT_ANIMATION_SPEED = 16;
 const int DEFAULT_NUM_FRAMES = 4;
 

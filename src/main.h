@@ -4,5 +4,6 @@
 static void init_game(void);
 static void gameloop(void);
 static void draw_game(void);
+static void update_scale(void);
 
 #endif
