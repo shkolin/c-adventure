@@ -32,10 +32,19 @@ A 2D adventure game written in C using the Raylib game development library.
 
 ## Controls
 
-- **W** - Move up
-- **A** - Move left
-- **S** - Move down
-- **D** - Move right
+### Movement
+
+- **W** or **↑** - Move up
+- **A** or **←** - Move left
+- **S** or **↓** - Move down
+- **D** or **→** - Move right
+
+### Display
+
+- **F11** or **Alt+Enter** - Toggle fullscreen mode
+
+### Other
+
 - **ESC** - Exit game
 
 ## Troubleshooting
