@@ -13,22 +13,22 @@ typedef struct Animation
 {
     int current_frame;
     int frame_counter;
-    int frames_speed;
+    int frame_rate;
     int num_frames;
 } Animation;
 
 enum PlayerDirection
 {
-    UP = 3,
-    DOWN = 0,
-    LEFT = 2,
-    RIGHT = 1,
+    DIR_UP = 3,
+    DIR_DOWN = 0,
+    DIR_LEFT = 2,
+    DIR_RIGHT = 1,
 };
 
 enum PlayerState
 {
-    Idle,
-    Walking,
+    IDLE,
+    WALKING,
 };
 
 typedef struct PlayerSize
@@ -49,7 +49,7 @@ typedef struct Player
 } Player;
 
 // Animation functions
-void init_animation(Animation *animation, int framesSpeed, int numFrames);
+void init_animation(Animation *animation, int frame_rate, int num_frames);
 void update_animation(Animation *animation);
 
 #endif
