@@ -7,15 +7,16 @@ static Player player = {0};
 static Texture2D player_texture = {0};
 static Texture2D player_texture_idle = {0};
 
-static const int SCREEN_WIDTH = 800;
-static const int SCREEN_HEIGHT = 450;
-static int SCALE = 3;
+static const int DEFAULT_SCREEN_WIDTH = 1280;
+static const int DEFAULT_SCREEN_HEIGHT = 720;
+static float SCALE = 3.0f;
 static const int FPS = 60;
 
 // Main entry point
 int main(void)
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "C Adventure");
+    InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, "C Adventure");
+    // SetConfigFlags(FLAG_VSYNC_HINT);
     SetTargetFPS(FPS);
 
     init_game();
@@ -51,9 +52,23 @@ static void init_game(void)
     player_texture_idle = LoadTexture("../assets/Char_003_Idle.png");
 }
 
+static void update_scale(void) {}
+
 static void gameloop(void)
 {
-    player.state = IDLE;
+    if (IsKeyPressed(KEY_F))
+    {
+        ToggleFullscreen();
+    }
+
+    if (IsWindowResized())
+    {
+        int monitor = GetCurrentMonitor();
+        int monitor_width = GetMonitorWidth(monitor);
+        int monitor_height = GetMonitorHeight(monitor);
+        SetWindowSize(monitor_width, monitor_height);
+        update_scale();
+    }
 
     bool pressed_key_up = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP);
     bool pressed_key_down = IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN);
@@ -65,6 +80,8 @@ static void gameloop(void)
     float player_y = player.position.y + sprite_offset.y * SCALE;
     int player_width = player.size.width * SCALE;
     int player_height = player.size.height * SCALE;
+
+    player.state = IDLE;
 
     // Player movement
     if (pressed_key_up && player_y > 0)
@@ -101,6 +118,7 @@ static void draw_game(void)
 {
     BeginDrawing();
     ClearBackground(DARKGRAY);
+    DrawFPS(10, 10);
     DrawTexturePro((player.state == IDLE) ? player_texture_idle : player_texture,
                    (Rectangle){player.animation.current_frame * player.frame.width,
                                player.direction * player.frame.height, player.frame.width,
