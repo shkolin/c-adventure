@@ -41,26 +41,8 @@ A 2D adventure game written in C using the Raylib game development library.
 
 ### Display
 
-- **F11** or **Alt+Enter** - Toggle fullscreen mode
+- **Alt+Enter** - Toggle fullscreen mode
 
 ### Other
 
 - **ESC** - Exit game
-
-## Troubleshooting
-
-### Compiler Issues
-
-The project uses your system's default C compiler. If you want to use a specific compiler, edit `CMakeLists.txt` and uncomment/modify these lines:
-
-```cmake
-set(CMAKE_C_COMPILER "/path/to/your/clang")
-set(CMAKE_CXX_COMPILER "/path/to/your/clang++")
-```
-
-For example, to use Homebrew's LLVM on macOS:
-
-```cmake
-set(CMAKE_C_COMPILER "/opt/homebrew/opt/llvm/bin/clang")
-set(CMAKE_CXX_COMPILER "/opt/homebrew/opt/llvm/bin/clang++")
-```
