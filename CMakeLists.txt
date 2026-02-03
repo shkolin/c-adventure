@@ -1,12 +1,17 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.25)
 
-project(CAdventure C)
+set(CMAKE_C_COMPILER "/opt/homebrew/opt/llvm/bin/clang")
+set(CMAKE_CXX_COMPILER "/opt/homebrew/opt/llvm/bin/clang++")
 
-set(CMAKE_C_STANDARD 99)
+project(CAdventure VERSION 0.0.1 LANGUAGES C)
+
+include(FetchContent)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(raylib REQUIRED)
 
-add_executable(CAdventure src/main.c src/player.c)
+file(GLOB C "src/*.c")
+add_executable(${PROJECT_NAME} ${C})
 
-target_link_libraries(CAdventure raylib)
+target_link_libraries(${PROJECT_NAME} raylib)
