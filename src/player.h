@@ -5,7 +5,6 @@
 
 extern const float DEFAULT_PLAYER_SPEED;
 
-// Animation constants
 extern const int DEFAULT_ANIMATION_SPEED;
 extern const int DEFAULT_NUM_FRAMES;
 
@@ -57,7 +56,6 @@ typedef struct PlayerInput
     bool right;
 } PlayerInput;
 
-// Animation functions
 void init_player_animation(Animation *animation, int frame_rate, int num_frames);
 void update_player_animation(Animation *animation);
 void update_player_position(Player *player, PlayerInput input, int screen_width, int screen_height,

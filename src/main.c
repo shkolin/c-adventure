@@ -2,7 +2,6 @@
 #include "player.h"
 #include <raylib.h>
 
-// Module variables declaration (local)
 static Player player = {0};
 static Texture2D player_texture = {0};
 static Texture2D player_texture_idle = {0};
@@ -12,7 +11,6 @@ static const int DEFAULT_SCREEN_HEIGHT = 720;
 static float SCALE = 3.0f;
 static const int FPS = 60;
 
-// Main entry point
 int main(void)
 {
     InitWindow(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, "C Adventure");
@@ -34,10 +32,8 @@ int main(void)
     return 0;
 }
 
-// Initialize game variables
 static void init_game(void)
 {
-    // Initialize player variables
     player.position = (Vector2){0, 50};
     player.size = (PlayerSize){8, 18};
     player.frame = (PlayerSize){24, 24};
@@ -46,7 +42,6 @@ static void init_game(void)
     player.state = IDLE;
     player.direction = DIR_DOWN;
 
-    // Initialize player animation
     init_player_animation(&player.animation, DEFAULT_ANIMATION_SPEED, DEFAULT_NUM_FRAMES);
 
     player_texture = LoadTexture("../assets/Char_003.png");
@@ -84,14 +79,10 @@ static void gameloop(void)
                          .left = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT),
                          .right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)};
 
-    // Update player position
     update_player_position(&player, input, GetScreenWidth(), GetScreenHeight(), SCALE);
-
-    // Animation frame update
     update_player_animation(&player.animation);
 }
 
-// Draw game elements
 static void draw_game(void)
 {
     BeginDrawing();
