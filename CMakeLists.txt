@@ -5,8 +5,6 @@ set(CMAKE_CXX_COMPILER "/opt/homebrew/opt/llvm/bin/clang++")
 
 project(CAdventure VERSION 0.0.1 LANGUAGES C)
 
-include(FetchContent)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(raylib REQUIRED)
