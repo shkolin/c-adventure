@@ -5,6 +5,7 @@
 static Player player = {0};
 static Texture2D player_texture = {0};
 static Texture2D player_texture_idle = {0};
+// static Camera2D camera = {0};
 
 static const int DEFAULT_SCREEN_WIDTH = 1280;
 static const int DEFAULT_SCREEN_HEIGHT = 720;
@@ -34,6 +35,8 @@ int main(void)
 
 static void init_game(void)
 {
+    HideCursor();
+
     player.position = (Vector2){0, 50};
     player.size = (PlayerSize){8, 18};
     player.frame = (PlayerSize){24, 24};
@@ -41,6 +44,11 @@ static void init_game(void)
     player.speed = DEFAULT_PLAYER_SPEED;
     player.state = IDLE;
     player.direction = DIR_DOWN;
+
+    // camera.target = (Vector2){player.position.x, player.position.y};
+    // camera.offset = (Vector2){DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT};
+    // camera.rotation = 0.0f;
+    // camera.zoom = 1.0f;
 
     init_player_animation(&player.animation, DEFAULT_ANIMATION_SPEED, DEFAULT_NUM_FRAMES);
 
@@ -87,7 +95,7 @@ static void draw_game(void)
 {
     BeginDrawing();
     ClearBackground(DARKGRAY);
-    DrawFPS(10, 10);
+    // BeginMode2D(camera);
     DrawTexturePro((player.state == IDLE) ? player_texture_idle : player_texture,
                    (Rectangle){player.animation.current_frame * player.frame.width,
                                player.direction * player.frame.height, player.frame.width,
@@ -95,5 +103,6 @@ static void draw_game(void)
                    (Rectangle){player.position.x, player.position.y, player.frame.width * SCALE,
                                player.frame.height * SCALE},
                    (Vector2){0, 0}, 0.0f, WHITE);
+    // EndMode2D();
     EndDrawing();
 }
